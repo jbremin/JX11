@@ -16,10 +16,10 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="3" x="0.54875" y="0.7131147540983607" useARA="0">
+  <FILTER uid="3" x="0.52125" y="0.7581967213114754" useARA="0">
     <PLUGIN name="Audio Output" descriptiveName="" format="Internal" category="I/O devices"
             manufacturer="JUCE" version="1.0" file="" uniqueId="724248cb"
-            isInstrument="0" fileTime="0" infoUpdateTime="0" numInputs="2"
+            isInstrument="0" fileTime="0" infoUpdateTime="0" numInputs="0"
             numOutputs="0" isShell="0" hasARAExtension="0" uid="724248cb"/>
     <STATE>0.</STATE>
     <LAYOUT>
@@ -34,7 +34,7 @@
   <FILTER uid="5" x="0.48125" y="0.4795081967213115" useARA="0">
     <PLUGIN name="JX11" format="VST3" category="Instrument|Synth" manufacturer="Benmir"
             version="1.0.0" file="/Users/johanbremin/Programming/JX11/Builds/MacOSX/build/Debug/JX11.vst3"
-            uniqueId="ae38c6c8" isInstrument="1" fileTime="18ca19c7920" infoUpdateTime="18ca1a514c8"
+            uniqueId="ae38c6c8" isInstrument="1" fileTime="18ca19c7920" infoUpdateTime="18cb25209d5"
             numInputs="0" numOutputs="2" isShell="0" hasARAExtension="0"
             uid="e420fc60"/>
     <STATE>191.VMjLgXK....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9XCLt3hKt3hKt3hKt3hYRUUSTEETIckVwTjQisVTTgkdEYjKAQjYPQSPWgUdMcjKAQjct3hdA4hKt3hKt3hKtnTUv.UQAslXuk0UXoWUFE0YQcEV77RRC8Vav8lak4Fc9vyKVMEUy.Ea0cVZtMEcgQWY9..</STATE>
