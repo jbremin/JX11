@@ -1,0 +1,1 @@
+Recreating the MDA JX11 synth from scratch using JUCE.
