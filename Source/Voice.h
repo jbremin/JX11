@@ -9,3 +9,11 @@
 */
 
 #pragma once
+
+struct Voice
+{
+    void reset()
+    {
+        // nothing here yet.
+    }
+};
