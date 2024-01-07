@@ -7,6 +7,9 @@
               displaySplashScreen="0">
   <MAINGROUP id="ZLAlaq" name="JX11">
     <GROUP id="{006F1FE8-138A-9FFD-6953-C90003061A5C}" name="Source">
+      <FILE id="IdNfMe" name="Voice.h" compile="0" resource="0" file="Source/Voice.h"/>
+      <FILE id="HnSE5T" name="Synth.cpp" compile="1" resource="0" file="Source/Synth.cpp"/>
+      <FILE id="Nz0znX" name="Synth.h" compile="0" resource="0" file="Source/Synth.h"/>
       <FILE id="ImdJkc" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="DRnMC3" name="PluginProcessor.h" compile="0" resource="0"
