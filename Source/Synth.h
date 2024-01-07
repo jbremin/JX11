@@ -17,7 +17,7 @@ class Synth
 {
 public:
     Synth();
-    
+
     void allocateResources(double sampleRate, int samplesPerBlock);
     void deallocateResources();
     void reset();
@@ -27,4 +27,7 @@ public:
 private:
     float sampleRate;
     Voice voice;
+    
+    void noteOn(int note, int velocity);
+    void noteOff(int note);
 };
