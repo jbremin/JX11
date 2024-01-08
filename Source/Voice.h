@@ -10,13 +10,11 @@
 
 #pragma once
 
-struct Voice
-{
+struct Voice {
     int note;
     int velocity;
     
-    void reset()
-    {
+    void reset() {
         note = 0;
         velocity = 0;
     }

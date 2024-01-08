@@ -14,11 +14,10 @@
 #include "Voice.h"
 #include "NoiseGenerator.h"
 
-class Synth
-{
+class Synth {
 public:
     Synth();
-
+    
     void allocateResources(double sampleRate, int samplesPerBlock);
     void deallocateResources();
     void reset();

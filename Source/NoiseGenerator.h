@@ -10,16 +10,13 @@
 
 #pragma once
 
-class NoiseGenerator
-{
+class NoiseGenerator {
 public:
-    void reset()
-    {
+    void reset() {
         noiseSeed = 22222;
     }
     
-    float nextValue()
-    {
+    float nextValue() {
         // Generates the next int pseudorandom number.
         noiseSeed = noiseSeed * 196314165 + 907633515;
         
