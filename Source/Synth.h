@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "Voice.h"
+#include "NoiseGenerator.h"
 
 class Synth
 {
@@ -27,6 +28,7 @@ public:
 private:
     float sampleRate;
     Voice voice;
+    NoiseGenerator noiseGen;
     
     void noteOn(int note, int velocity);
     void noteOff(int note);
