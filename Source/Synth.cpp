@@ -9,6 +9,7 @@
 */
 
 #include "Synth.h"
+#include "Utils.h"
 
 Synth::Synth() {
     sampleRate = 44100.0f;
@@ -44,6 +45,8 @@ void Synth::render(float** outputBuffers, int sampleCount) {
             outputBufferRight[sample] = output;
         }
     }
+    protectYourEars(outputBufferLeft, sampleCount);
+    protectYourEars(outputBufferRight, sampleCount);
 }
 
 void Synth::noteOn(int note, int velocity) {

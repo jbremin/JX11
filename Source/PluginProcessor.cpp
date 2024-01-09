@@ -24,8 +24,7 @@ JX11AudioProcessor::JX11AudioProcessor()
 {
 }
 
-JX11AudioProcessor::~JX11AudioProcessor()
-{
+JX11AudioProcessor::~JX11AudioProcessor() {
 }
 
 //==============================================================================
@@ -168,7 +167,7 @@ void JX11AudioProcessor::handleMIDI(uint8_t data0, uint8_t data1, uint8_t data2)
     synth.midiMessage(data0, data1, data2);
 }
 
-void JX11AudioProcessor::render(
+void JX11AudioProcessor::render (
     juce::AudioBuffer<float>& buffer, int sampleCount, int bufferOffset) {
     float* outputBuffers[2] = { nullptr, nullptr };
     outputBuffers[0] = buffer.getWritePointer(0) + bufferOffset;
