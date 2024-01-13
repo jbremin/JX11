@@ -7,6 +7,7 @@
               displaySplashScreen="0">
   <MAINGROUP id="ZLAlaq" name="JX11">
     <GROUP id="{006F1FE8-138A-9FFD-6953-C90003061A5C}" name="Source">
+      <FILE id="p4Erft" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
       <FILE id="ZN0t7D" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
       <FILE id="HmrFnN" name="NoiseGenerator.h" compile="0" resource="0"
             file="Source/NoiseGenerator.h"/>
