@@ -33,7 +33,6 @@ void Synth::render(float** outputBuffers, int sampleCount) {
     float* outputBufferRight = outputBuffers[1];
     
     for (int sample = 0; sample < sampleCount; ++sample) {
-        float noise = noiseGen.nextValue();
         float output = 0.0f;
         
         if (voice.note > 0) {
@@ -51,11 +50,10 @@ void Synth::render(float** outputBuffers, int sampleCount) {
 
 void Synth::noteOn(int note, int velocity) {
     voice.note = note;
+    float freq = 261.63f;
     
     voice.osc.amplitude = (velocity / 127.0f) * 0.5f;
-    voice.osc.freq = 261.63f;
-    voice.osc.sampleRate = sampleRate;
-    voice.osc.phaseOffset = 0.0f;
+    voice.osc.inc = freq / sampleRate;
     voice.osc.reset();
 }
 
