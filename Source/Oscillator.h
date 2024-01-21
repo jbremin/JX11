@@ -19,7 +19,7 @@ public:
     float phase;
     
     void reset() {
-        phase = 0.0f;
+        phase = 1.5707963268f;
     }
     
     float nextSample() {
