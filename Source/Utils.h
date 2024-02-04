@@ -10,10 +10,13 @@
 
 #pragma once
 
-inline void protectYourEars(float* buffer, int sampleCount) {
+inline void protectYourEars(float* buffer, int sampleCount)
+{
     if (buffer == nullptr) { return; }
     bool firstWarning = true;
-    for (int i = 0; i < sampleCount; ++i) {
+    
+    for (int i = 0; i < sampleCount; ++i)
+    {
         float x = buffer[i];
         bool silence = false;
         if (std::isnan(x)) {

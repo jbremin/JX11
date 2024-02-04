@@ -12,7 +12,8 @@
 
 #include "Oscillator.h"
 
-struct Voice {
+struct Voice
+{
     int note;
     Oscillator osc;
     

@@ -14,19 +14,20 @@
 //==============================================================================
 /**
 */
-class JX11AudioProcessorEditor  : public juce::AudioProcessorEditor {
-public:
-    JX11AudioProcessorEditor (JX11AudioProcessor&);
-    ~JX11AudioProcessorEditor() override;
+class JX11AudioProcessorEditor  : public juce::AudioProcessorEditor
+{
+    public:
+        JX11AudioProcessorEditor (JX11AudioProcessor&);
+        ~JX11AudioProcessorEditor() override;
 
-    //==============================================================================
-    void paint (juce::Graphics&) override;
-    void resized() override;
+        //==============================================================================
+        void paint (juce::Graphics&) override;
+        void resized() override;
 
-private:
-    // This reference is provided as a quick way for your editor to
-    // access the processor object that created it.
-    JX11AudioProcessor& audioProcessor;
+    private:
+        // This reference is provided as a quick way for your editor to
+        // access the processor object that created it.
+        JX11AudioProcessor& audioProcessor;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JX11AudioProcessorEditor)
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JX11AudioProcessorEditor)
 };
