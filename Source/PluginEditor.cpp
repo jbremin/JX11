@@ -29,7 +29,7 @@ void JX11AudioProcessorEditor::paint (juce::Graphics& g)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
     g.setColour (juce::Colours::white);
     g.setFont (15.0f);
-    g.drawFittedText ("2024-02-04", getLocalBounds(), juce::Justification::centred, 1);
+    g.drawFittedText ("JX11 Plugin", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void JX11AudioProcessorEditor::resized()
