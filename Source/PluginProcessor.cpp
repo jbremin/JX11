@@ -227,3 +227,12 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new JX11AudioProcessor();
 }
+
+juce::AudioProcessorValueTreeState::ParameterLayout JX11AudioProcessor::createParameterLayout()
+{
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
+    
+    // add parameters
+    
+    return layout;
+}
