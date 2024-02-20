@@ -8,6 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "Utils.h"
 
 //==============================================================================
 JX11AudioProcessor::JX11AudioProcessor()
@@ -22,10 +23,39 @@ JX11AudioProcessor::JX11AudioProcessor()
                        )
 #endif
 {
+    castParameter(apvts, ParameterID::oscMix, oscMixParam);
+    castParameter(apvts, ParameterID::oscTune, oscTuneParam);
+    castParameter(apvts, ParameterID::oscFine, oscFineParam);
+    castParameter(apvts, ParameterID::glideMode, glideModeParam);
+    castParameter(apvts, ParameterID::glideRate, glideRateParam);
+    castParameter(apvts, ParameterID::glideBend, glideBendParam);
+    castParameter(apvts, ParameterID::filterFreq, filterFreqParam);
+    castParameter(apvts, ParameterID::filterReso, filterResoParam);
+    castParameter(apvts, ParameterID::filterEnv, filterEnvParam);
+    castParameter(apvts, ParameterID::filterLFO, filterLFOParam);
+    castParameter(apvts, ParameterID::filterVelocity, filterVelocityParam);
+    castParameter(apvts, ParameterID::filterAttack, filterAttackParam);
+    castParameter(apvts, ParameterID::filterDecay, filterDecayParam);
+    castParameter(apvts, ParameterID::filterSustain, filterSustainParam);
+    castParameter(apvts, ParameterID::filterRelease, filterReleaseParam);
+    castParameter(apvts, ParameterID::envAttack, envAttackParam);
+    castParameter(apvts, ParameterID::envDecay, envDecayParam);
+    castParameter(apvts, ParameterID::envSustain, envSustainParam);
+    castParameter(apvts, ParameterID::envRelease, envReleaseParam);
+    castParameter(apvts, ParameterID::lfoRate, lfoRateParam);
+    castParameter(apvts, ParameterID::vibrato, vibratoParam);
+    castParameter(apvts, ParameterID::noise, noiseParam);
+    castParameter(apvts, ParameterID::octave, octaveParam);
+    castParameter(apvts, ParameterID::tuning, tuningParam);
+    castParameter(apvts, ParameterID::outputLevel, outputLevelParam);
+    castParameter(apvts, ParameterID::polyMode, polyModeParam);
+    
+    apvts.state.addListener(this);
 }
 
 JX11AudioProcessor::~JX11AudioProcessor()
 {
+    apvts.state.removeListener(this);
 }
 
 //==============================================================================
@@ -99,6 +129,7 @@ void JX11AudioProcessor::reset()
 void JX11AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     synth.allocateResources(sampleRate, samplesPerBlock);
+    parametersChanged.store(true);
     reset();
 }
 
@@ -136,7 +167,6 @@ void JX11AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
                                        juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
@@ -144,6 +174,11 @@ void JX11AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i) {
         buffer.clear (i, 0, buffer.getNumSamples());
+    }
+    
+    bool expected = true;
+    if (isNonRealtime() || parametersChanged.compare_exchange_strong(expected, false)) {
+        update();
     }
     
     splitBufferByEvents(buffer, midiMessages);
@@ -194,6 +229,13 @@ void JX11AudioProcessor::render (
         outputBuffers[1] = buffer.getWritePointer(1) + bufferOffset;
     }
     synth.render(outputBuffers, sampleCount);
+}
+
+void JX11AudioProcessor::update()
+{
+    float noiseMix = noiseParam->get() / 100.0f;
+    noiseMix *= noiseMix;
+    synth.noiseMix = noiseMix * 0.06f;
 }
 
 //==============================================================================
