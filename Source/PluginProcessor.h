@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "Synth.h"
+#include "Preset.h"
 
 namespace ParameterID
 {
@@ -108,6 +109,10 @@ class JX11AudioProcessor  : public juce::AudioProcessor,
         std::atomic<bool> parametersChanged { false };
     
         void update();
+    
+        void createPrograms();
+        std::vector<Preset> presets;
+        int currentProgram;
     
         juce::AudioParameterFloat* oscMixParam;
         juce::AudioParameterFloat* oscTuneParam;
