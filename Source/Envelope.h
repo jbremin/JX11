@@ -1,0 +1,39 @@
+/*
+  ==============================================================================
+
+    Envelope.h
+    Created: 25 Feb 2024 4:57:57pm
+    Author:  Johan Bremin
+
+  ==============================================================================
+*/
+
+#pragma once
+
+const float SILENCE = 0.0001f;
+
+class Envelope
+{
+public:
+    float nextValue()
+    {
+        level = multiplier * (level - target) + target;
+        return level;
+    }
+    
+    void reset()
+    {
+        level = 0.0f;
+        target = 0.0f;
+        multiplier = 0.0f;
+    }
+    
+    float level;
+    float multiplier;
+    float target;
+    
+    float attackMultiplier;
+    float decayMultiplier;
+    float sustainLevel;
+    float releaseMultiplier;
+};
