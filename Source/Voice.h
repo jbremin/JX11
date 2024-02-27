@@ -20,6 +20,11 @@ struct Voice
     Oscillator osc;
     Envelope env;
     
+    void release()
+    {
+        env.release();
+    }
+    
     void reset() {
         note = 0;
         saw = 0.0f;

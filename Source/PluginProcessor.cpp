@@ -289,7 +289,7 @@ void JX11AudioProcessor::update()
     synth.envDecay =
         std::exp(-inverseSampleRate * std::exp(5.5f - 0.075f * envDecayParam->get()));
     
-    synth.envSustain = envSustainParam->get();
+    synth.envSustain = envSustainParam->get() / 100.0f;;
     
     float envRelease = envReleaseParam->get();
     if (envRelease < 1.0f) {
