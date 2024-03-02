@@ -17,7 +17,8 @@ struct Voice
 {
     int note;
     float saw;
-    Oscillator osc;
+    Oscillator osc1;
+    Oscillator osc2;
     Envelope env;
     
     void release()
@@ -28,15 +29,17 @@ struct Voice
     void reset() {
         note = 0;
         saw = 0.0f;
-        osc.reset();
+        osc1.reset();
+        osc2.reset();
         env.reset();
     }
     
     float render(float input) {
-        float sample = osc.nextSample();
-        saw = saw * 0.997f + sample;
-        float output = saw + input;
+        float sample1 = osc1.nextSample();
+        float sample2 = osc2.nextSample();
+        saw = saw * 0.997f + sample1 - sample2;
         
+        float output = saw + input;
         float envelope = env.nextValue();
         return output * envelope;
     }
