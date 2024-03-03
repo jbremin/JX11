@@ -17,9 +17,11 @@ struct Voice
 {
     int note;
     float saw;
+    float period;
     Oscillator osc1;
     Oscillator osc2;
     Envelope env;
+    
     
     void release()
     {

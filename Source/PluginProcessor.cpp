@@ -282,11 +282,6 @@ void JX11AudioProcessor::update()
 {
     float sampleRate = float(getSampleRate());
     float inverseSampleRate = 1.0f / sampleRate;
-    synth.oscMix = oscMixParam->get() / 100.0f;
-    
-    float semi = oscTuneParam->get();
-    float cent = oscFineParam->get();
-    synth.detune = std::pow(1.059463094359f, -semi - 0.01f * cent);
     
     synth.envAttack =
         std::exp(-inverseSampleRate * std::exp(5.5f - 0.075f * envAttackParam->get()));
@@ -306,6 +301,17 @@ void JX11AudioProcessor::update()
     float noiseMix = noiseParam->get() / 100.0f;
     noiseMix *= noiseMix;
     synth.noiseMix = noiseMix * 0.06f;
+    
+    synth.oscMix = oscMixParam->get() / 100.0f;
+    
+    float semi = oscTuneParam->get();
+    float cent = oscFineParam->get();
+    synth.detune = std::pow(1.059463094359f, -semi - 0.01f * cent);
+    
+    float octave = octaveParam->get();
+    float tuning = tuningParam->get();
+    float tuneInSemi = -36.3763 - 12.0f * octave - tuning / 100.0f;
+    synth.tune = sampleRate * std::exp(0.05776226505f * tuneInSemi);
 }
 
 //==============================================================================

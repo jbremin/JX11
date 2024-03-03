@@ -27,6 +27,7 @@ public:
     
     float noiseMix;
     float detune;
+    float tune;
     float envAttack;
     float envDecay;
     float envSustain;
@@ -36,8 +37,11 @@ public:
 private:
     void noteOn(int note, int velocity);
     void noteOff(int note);
+    float calcPeriod(int note) const;
     
     float sampleRate;
     Voice voice;
     NoiseGenerator noiseGen;
+    
+    float pitchBend;
 };
