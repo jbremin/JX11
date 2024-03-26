@@ -42,6 +42,7 @@ private:
     void noteOff(int note);
     float calcPeriod(int note) const;
     void startVoice(int v, int note, int velocity);
+    int findFreeVoice() const;
     
     float sampleRate;
     std::array<Voice, MAX_VOICES> voices;
