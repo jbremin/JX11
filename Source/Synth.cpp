@@ -11,6 +11,8 @@
 #include "Synth.h"
 #include "Utils.h"
 
+static const float ANALOG = 0.002f;
+
 Synth::Synth()
 {
     sampleRate = 44100.0f;
@@ -84,7 +86,7 @@ void Synth::render(float** outputBuffers, int sampleCount)
 
 void Synth::startVoice(int v, int note, int velocity)
 {
-    float period = calcPeriod(note);
+    float period = calcPeriod(v, note);
     
     Voice& voice = voices[v];
     voice.period = period;
@@ -122,9 +124,9 @@ void Synth::noteOff(int note)
     }
 }
 
-float Synth::calcPeriod(int note) const
+float Synth::calcPeriod(int v, int note) const
 {
-    float period = tune * std::exp(-0.05776226505f * float(note));
+    float period = tune * std::exp(-0.05776226505f * (float(note) + ANALOG * float(v)));
     while (period < 6.0f || (period * detune) < 6.0f) { period += period; }
     return period;
 }
