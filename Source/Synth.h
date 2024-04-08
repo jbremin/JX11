@@ -38,6 +38,7 @@ public:
     float envRelease;
     float oscMix;
     float volumeTrim;
+    
     juce::LinearSmoothedValue<float> outputLevelSmoother;
         
 private:
@@ -45,12 +46,15 @@ private:
     void noteOff(int note);
     float calcPeriod(int v, int note) const;
     void startVoice(int v, int note, int velocity);
+    void restartMonoVoice(int note, int velocity);
+    void shiftQueuedNotes();
+    int nextQueuedNote();
+    
     int findFreeVoice() const;
     bool sustainPedalPressed;
-    
     float sampleRate;
+    
     std::array<Voice, MAX_VOICES> voices;
     NoiseGenerator noiseGen;
-    
     float pitchBend;
 };
