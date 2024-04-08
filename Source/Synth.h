@@ -37,6 +37,8 @@ public:
     float envSustain;
     float envRelease;
     float oscMix;
+    float volumeTrim;
+    juce::LinearSmoothedValue<float> outputLevelSmoother;
         
 private:
     void noteOn(int note, int velocity);

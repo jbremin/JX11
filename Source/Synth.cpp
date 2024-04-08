@@ -37,6 +37,8 @@ void Synth::reset()
     noiseGen.reset();
     pitchBend = 1.0f;
     sustainPedalPressed = false;
+    
+    outputLevelSmoother.reset(sampleRate, 0.05);
 }
 
 void Synth::render(float** outputBuffers, int sampleCount)
@@ -67,6 +69,10 @@ void Synth::render(float** outputBuffers, int sampleCount)
             }
         }
         
+        float outputLevel = outputLevelSmoother.getNextValue();
+        outputLeft *= outputLevel;
+        outputRight *= outputLevel;
+        
         if (outputBufferRight != nullptr) {
             outputBufferLeft[sample] = outputLeft;
             outputBufferRight[sample] = outputRight;
@@ -95,7 +101,7 @@ void Synth::startVoice(int v, int note, int velocity)
     voice.note = note;
     voice.updatePanning();
     
-    voice.osc1.amplitude = (velocity / 127.0f) * 0.5;
+    voice.osc1.amplitude = volumeTrim * velocity;
     voice.osc2.amplitude = voice.osc1.amplitude * oscMix;
     
     Envelope& env = voice.env;
