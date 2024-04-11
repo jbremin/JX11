@@ -39,6 +39,9 @@ public:
     float oscMix;
     float volumeTrim;
     
+    float velocitySensitivity;
+    bool ignoreVelocity;
+    
     juce::LinearSmoothedValue<float> outputLevelSmoother;
         
 private:

@@ -101,7 +101,8 @@ void Synth::startVoice(int v, int note, int velocity)
     voice.note = note;
     voice.updatePanning();
     
-    voice.osc1.amplitude = volumeTrim * velocity;
+    float vel = 0.004f * float((velocity + 64) * (velocity + 64)) - 8.0f;
+    voice.osc1.amplitude = volumeTrim * vel;
     voice.osc2.amplitude = voice.osc1.amplitude * oscMix;
     
     Envelope& env = voice.env;
@@ -114,6 +115,10 @@ void Synth::startVoice(int v, int note, int velocity)
 
 void Synth::noteOn(int note, int velocity)
 {
+    if (ignoreVelocity) {
+        velocity = 80;
+    }
+    
     int v = 0; // index of the voice to use (0 = mono voice)
     
     if (numVoices == 1) { // monophonic
@@ -240,6 +245,7 @@ void Synth::shiftQueuedNotes()
 {
     for (int tmp = MAX_VOICES - 1; tmp > 0; tmp--) {
         voices[tmp].note = voices[tmp - 1].note;
+        voices[tmp].release();
     }
 }
 
