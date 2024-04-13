@@ -39,6 +39,9 @@ void Synth::reset()
     sustainPedalPressed = false;
     
     outputLevelSmoother.reset(sampleRate, 0.05);
+    
+    lfo = 0.0f;
+    lfoStep = 0;
 }
 
 void Synth::render(float** outputBuffers, int sampleCount)
@@ -56,6 +59,8 @@ void Synth::render(float** outputBuffers, int sampleCount)
     
     for (int sample = 0; sample < sampleCount; ++sample) {
         const float noise = noiseGen.nextValue() * noiseMix;
+        
+        updateLFO();
         
         float outputLeft = 0.0f;
         float outputRight = 0.0f;
@@ -263,4 +268,28 @@ int Synth::nextQueuedNote()
     }
     
     return 0;
+}
+
+void Synth::updateLFO()
+{
+    if (--lfoStep <= 0) {
+        lfoStep = LFO_MAX;
+        
+        lfo += lfoInc;
+        if (lfo > PI) {
+            lfo -= TWO_PI;
+        }
+        
+        const float sine = std::sin(lfo);
+        
+        float vibratoMod = 1.0f + sine * 0.2f;
+        
+        for (int v = 0; v < MAX_VOICES; ++v) {
+            Voice& voice = voices[v];
+            if (voice.env.isActive()) {
+                voice.osc1.modulation = vibratoMod;
+                voice.osc2.modulation = vibratoMod;
+            }
+        }
+    }
 }

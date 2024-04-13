@@ -19,9 +19,6 @@ const float TWO_PI = 6.2831853071795864f;
 class Oscillator
 {
 public:
-    float period = 0.0f;
-    float amplitude = 0.0f;
-    
     void reset()
     {
         inc = 0.0f;
@@ -40,7 +37,7 @@ public:
         
         if (phase <= PI_OVER_4) {
             
-            float halfPeriod = period;
+            float halfPeriod = (period / 2.0f) * modulation;
             phaseMax = std::floor(0.5f + halfPeriod) - 0.5;
             dc = 0.5 * amplitude / phaseMax;
             phaseMax *= PI;
@@ -70,6 +67,10 @@ public:
             }
             return output - dc;
         }
+    
+    float period = 0.0f;
+    float amplitude = 0.0f;
+    float modulation = 1.0f;
     
 private:
     float phase;
