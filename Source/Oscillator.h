@@ -39,6 +39,7 @@ public:
             
             float halfPeriod = (period / 2.0f) * modulation;
             phaseMax = std::floor(0.5f + halfPeriod) - 0.5;
+            
             dc = 0.5 * amplitude / phaseMax;
             phaseMax *= PI;
             
@@ -59,17 +60,38 @@ public:
                     phase = phaseMax + phaseMax - phase;
                     inc = -inc;
                 }
-            float sinp = dsin * sin0 - sin1;
-            sin1 = sin0;
-            sin0 = sinp;
             
-            output = sinp / phase;
+                float sinp = dsin * sin0 - sin1;
+                sin1 = sin0;
+                sin0 = sinp;
+            
+                output = sinp / phase;
             }
+        
             return output - dc;
         }
     
+    void squareWave(Oscillator& other, float newPeriod)
+    {
+        reset();
+        
+        if (other.inc > 0.0f) {
+            phase = other.phaseMax + other.phaseMax - other.phase;
+            inc = -other.inc;
+        } else if (other.inc < 0.0f) {
+            phase = other.phase;
+            inc = other.inc;
+        } else {
+            phase = -PI;
+            inc = PI;
+        }
+        
+        phase += PI * newPeriod / 2.0f;
+        phaseMax = phase;
+    }
+    
     float period = 0.0f;
-    float amplitude = 0.0f;
+    float amplitude = 1.0f;
     float modulation = 1.0f;
     
 private:
