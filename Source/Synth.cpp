@@ -38,6 +38,7 @@ void Synth::reset()
     noiseGen.reset();
     
     pitchBend = 1.0f;
+    modWheel = 0.0f;
     sustainPedalPressed = false;
     
     lfo = 0.0f;
@@ -196,6 +197,11 @@ void Synth::midiMessage(uint8_t data0, uint8_t data1, uint8_t data2)
         case 0xE0:
             pitchBend = std::exp(-0.000014102f * float(data1 + 128 * data2 - 8192));
             break;
+            
+        // Mod wheel
+        case 0x01:
+            modWheel = 0.000005 * float(data2 * data2);
+            break;
         
         case 0xB0:
             controlChange(data1, data2);
@@ -288,8 +294,8 @@ void Synth::updateLFO()
         
         const float sine = std::sin(lfo);
         
-        float vibratoMod = 1.0f + sine * vibrato;
-        float pwm = 1.0f + sine * pwmDepth;
+        float vibratoMod = 1.0f + sine * (modWheel + vibrato);
+        float pwm = 1.0f + sine * (modWheel + pwmDepth);
         
         for (int v = 0; v < MAX_VOICES; ++v) {
             Voice& voice = voices[v];

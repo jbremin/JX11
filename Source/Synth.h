@@ -67,6 +67,7 @@ private:
     std::array<Voice, MAX_VOICES> voices;
     NoiseGenerator noiseGen;
     float pitchBend;
+    float modWheel;
     
     int lfoStep;
     float lfo;
