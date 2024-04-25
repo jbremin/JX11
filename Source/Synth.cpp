@@ -43,6 +43,7 @@ void Synth::reset()
     
     lfo = 0.0f;
     lfoStep = 0;
+    lastNote = 0;
 
     outputLevelSmoother.reset(sampleRate, 0.05);
 }
@@ -57,6 +58,7 @@ void Synth::render(float** outputBuffers, int sampleCount)
         if (voice.env.isActive()) {
             voice.osc1.period = voice.period * pitchBend;
             voice.osc2.period = voice.osc1.period * detune;
+            voice.glideRate = glideRate;
         }
     }
     
@@ -105,7 +107,21 @@ void Synth::startVoice(int v, int note, int velocity)
     float period = calcPeriod(v, note);
     
     Voice& voice = voices[v];
-    voice.period = period;
+    voice.target = period;
+    
+    int noteDistance = 0; if (lastNote > 0) {
+        if ((glideMode == 2) || ((glideMode == 1) && isPlayingLegatoStyle())) {
+            noteDistance = note - lastNote;
+        }
+    }
+    
+    voice.period = period * std::pow(1.059463094359f, float(noteDistance) - glideBend);
+    
+    if (voice.period < 6.0f) {
+        voice.period = 6.0f;
+    }
+    
+    lastNote = note;
     voice.note = note;
     voice.updatePanning();
     
@@ -251,7 +267,11 @@ void Synth::restartMonoVoice(int note, int velocity)
     float period = calcPeriod(0, note);
     
     Voice& voice = voices[0];
-    voice.period = period;
+    voice.target = period;
+    
+    if (glideMode == 0) {
+        voice.period = period;
+    }
     
     voice.env.level += SILENCE + SILENCE;
     voice.note = note;
@@ -302,7 +322,21 @@ void Synth::updateLFO()
             if (voice.env.isActive()) {
                 voice.osc1.modulation = vibratoMod;
                 voice.osc2.modulation = pwm;
+                
+                voice.updateLFO();
+                updatePeriod(voice);
             }
         }
+    }
+}
+
+bool Synth::isPlayingLegatoStyle() const
+{
+    int held = 0;
+    for (int i = 0; i < MAX_VOICES; ++i) {
+        if (voices[i].note > 0) {
+            held += 1;
+        }
+        return held > 0;
     }
 }

@@ -49,8 +49,20 @@ public:
     float lfoInc;
     
     float pwmDepth;
+    int glideMode;
+    float glideRate;
+    float glideBend;
         
 private:
+    
+    inline void updatePeriod(Voice& voice)
+    {
+        voice.osc1.period = voice.period * pitchBend;
+        voice.osc2.period = voice.osc1.period * detune;
+    }
+    
+    bool isPlayingLegatoStyle() const;
+    
     void noteOn(int note, int velocity);
     void noteOff(int note);
     float calcPeriod(int v, int note) const;
@@ -71,4 +83,5 @@ private:
     
     int lfoStep;
     float lfo;
+    int lastNote;
 };
