@@ -7,6 +7,7 @@
               displaySplashScreen="0">
   <MAINGROUP id="ZLAlaq" name="JX11">
     <GROUP id="{006F1FE8-138A-9FFD-6953-C90003061A5C}" name="Source">
+      <FILE id="XXrfkj" name="Filter.h" compile="0" resource="0" file="Source/Filter.h"/>
       <FILE id="drz0OE" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
       <FILE id="hjxadJ" name="Preset.h" compile="0" resource="0" file="Source/Preset.h"/>
       <FILE id="p4Erft" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>

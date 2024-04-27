@@ -22,6 +22,10 @@ Synth::Synth()
 void Synth::allocateResources(double sampleRate_, int /*samplesPerBlock*/)
 {
     sampleRate = static_cast<float>(sampleRate_);
+    
+    for (int v = 0; v < MAX_VOICES; ++v) {
+        voices[v].filter.sampleRate = sampleRate;
+    }
 }
 
 void Synth::deallocateResources()
@@ -56,9 +60,10 @@ void Synth::render(float** outputBuffers, int sampleCount)
     for (int v = 0; v < MAX_VOICES; ++v) {
         Voice& voice = voices[v];
         if (voice.env.isActive()) {
-            voice.osc1.period = voice.period * pitchBend;
-            voice.osc2.period = voice.osc1.period * detune;
+            voice.osc1.period = voice.period * pitchBend; // should this be changed?
+            voice.osc2.period = voice.osc1.period * detune; // should this be changed? to updatePeriod(voice) see p. 311
             voice.glideRate = glideRate;
+            voice.filterQ = filterQ;
         }
     }
     
@@ -95,6 +100,7 @@ void Synth::render(float** outputBuffers, int sampleCount)
         Voice& voice = voices[v];
         if (!voice.env.isActive()) {
             voice.env.reset();
+            voice.filter.reset();
         }
     }
     
@@ -132,6 +138,9 @@ void Synth::startVoice(int v, int note, int velocity)
     if (vibrato == 0.0f && pwmDepth > 0.0f) {
         voice.osc2.squareWave(voice.osc1, voice.period);
     }
+    
+    voice.cutoff = sampleRate / (period * PI);
+    voice.cutoff *= std::exp(velocitySensitivity * float(velocity - 64));
     
     Envelope& env = voice.env;
     env.attackMultiplier = envAttack;
@@ -276,6 +285,11 @@ void Synth::restartMonoVoice(int note, int velocity)
     voice.env.level += SILENCE + SILENCE;
     voice.note = note;
     voice.updatePanning();
+    
+    voice.cutoff = sampleRate / (period * PI);
+    if (velocity > 0) {
+        voice.cutoff *= std::exp(velocitySensitivity * float(velocity - 64));
+    }
 }
 
 void Synth::shiftQueuedNotes()
@@ -317,12 +331,14 @@ void Synth::updateLFO()
         float vibratoMod = 1.0f + sine * (modWheel + vibrato);
         float pwm = 1.0f + sine * (modWheel + pwmDepth);
         
+        float filterMod = filterKeyTracking;
+        
         for (int v = 0; v < MAX_VOICES; ++v) {
             Voice& voice = voices[v];
             if (voice.env.isActive()) {
                 voice.osc1.modulation = vibratoMod;
                 voice.osc2.modulation = pwm;
-                
+                voice.filterMod = filterMod;
                 voice.updateLFO();
                 updatePeriod(voice);
             }
