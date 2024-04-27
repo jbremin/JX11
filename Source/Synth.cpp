@@ -50,6 +50,8 @@ void Synth::reset()
     lastNote = 0;
 
     outputLevelSmoother.reset(sampleRate, 0.05);
+    
+    resonanceCtl = 1.0f;
 }
 
 void Synth::render(float** outputBuffers, int sampleCount)
@@ -63,7 +65,7 @@ void Synth::render(float** outputBuffers, int sampleCount)
             voice.osc1.period = voice.period * pitchBend; // should this be changed?
             voice.osc2.period = voice.osc1.period * detune; // should this be changed? to updatePeriod(voice) see p. 311
             voice.glideRate = glideRate;
-            voice.filterQ = filterQ;
+            voice.filterQ = filterQ * resonanceCtl;
         }
     }
     
@@ -226,8 +228,13 @@ void Synth::midiMessage(uint8_t data0, uint8_t data1, uint8_t data2)
         // Mod wheel
         case 0x01:
             modWheel = 0.000005 * float(data2 * data2);
+            break;  
+            
+        // Resonance
+        case 0x47:
+            resonanceCtl = 154.0f / float(154 - data2);
             break;
-        
+
         case 0xB0:
             controlChange(data1, data2);
             break;

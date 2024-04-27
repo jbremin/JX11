@@ -86,4 +86,6 @@ private:
     int lfoStep;
     float lfo;
     int lastNote;
+    
+    float resonanceCtl;
 };
