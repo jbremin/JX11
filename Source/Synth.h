@@ -41,6 +41,7 @@ public:
     float vibrato;
     float filterKeyTracking;
     float filterQ;
+    float filterLFODepth;
     
     float velocitySensitivity;
     bool ignoreVelocity;
@@ -88,4 +89,5 @@ private:
     int lastNote;
     
     float resonanceCtl;
+    float pressure;
 };
