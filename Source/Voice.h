@@ -26,15 +26,19 @@ struct Voice
     float filterMod;
     float filterQ;
     float pitchBend;
+    float filterEnvDepth;
+    
     Oscillator osc1;
     Oscillator osc2;
     Envelope env;
+    Envelope filterEnv;
     Filter filter;
     
     
     void release()
     {
         env.release();
+        filterEnv.release();
     }
     
     void reset()
@@ -47,6 +51,7 @@ struct Voice
         osc2.reset();
         env.reset();
         filter.reset();
+        filterEnv.reset();
     }
     
     float render(float input)
@@ -74,7 +79,9 @@ struct Voice
     {
         period += glideRate * (target - period);
         
-        float modulatedCutoff = cutoff * std::exp(filterMod) / pitchBend;
+        float fenv = filterEnv.nextValue();
+        
+        float modulatedCutoff = cutoff * std::exp(filterMod + filterEnvDepth * fenv) / pitchBend;
         
         modulatedCutoff = std::clamp(modulatedCutoff, 30.0f, 20000.0f);
         filter.updateCoefficients(modulatedCutoff, filterQ);

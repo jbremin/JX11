@@ -39,9 +39,12 @@ public:
     float oscMix;
     float volumeTrim;
     float vibrato;
+    
     float filterKeyTracking;
     float filterQ;
     float filterLFODepth;
+    float filterAttack, filterDecay, filterSustain, filterRelease;
+    float filterEnvDepth;
     
     float velocitySensitivity;
     bool ignoreVelocity;
