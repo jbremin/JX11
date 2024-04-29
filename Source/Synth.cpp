@@ -53,6 +53,7 @@ void Synth::reset()
     
     resonanceCtl = 1.0f;
     pressure = 0.0f;
+    filterZip = 0.0f;
 }
 
 void Synth::render(float** outputBuffers, int sampleCount)
@@ -66,6 +67,7 @@ void Synth::render(float** outputBuffers, int sampleCount)
             updatePeriod(voice);
             voice.glideRate = glideRate;
             voice.filterQ = filterQ * resonanceCtl;
+            voice.pitchBend = pitchBend;
         }
     }
     
@@ -271,6 +273,16 @@ void Synth::controlChange(uint8_t data1, uint8_t data2)
                 noteOff(SUSTAIN);
             }
             break;
+        
+        // Filter +
+        case 0x4A:
+            filterCtl = 0.02f * float(data2);
+            break;
+            
+        // Filter -
+        case 0x4B:
+            filterCtl = -0.03 * float(data2);
+            break;
             
         default:
             if (data1 >= 0x78) {
@@ -343,14 +355,15 @@ void Synth::updateLFO()
         float vibratoMod = 1.0f + sine * (modWheel + vibrato);
         float pwm = 1.0f + sine * (modWheel + pwmDepth);
         
-        float filterMod = filterKeyTracking + (filterLFODepth + pressure) * sine;
+        float filterMod = filterKeyTracking + filterCtl + (filterLFODepth + pressure) * sine;
+        filterZip += 0.005f * (filterMod - filterZip);
         
         for (int v = 0; v < MAX_VOICES; ++v) {
             Voice& voice = voices[v];
             if (voice.env.isActive()) {
                 voice.osc1.modulation = vibratoMod;
                 voice.osc2.modulation = pwm;
-                voice.filterMod = filterMod;
+                voice.filterMod = filterZip;
                 voice.updateLFO();
                 updatePeriod(voice);
             }

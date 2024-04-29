@@ -81,6 +81,7 @@ private:
     
     std::array<Voice, MAX_VOICES> voices;
     NoiseGenerator noiseGen;
+    float filterCtl;
     float pitchBend;
     float modWheel;
     
@@ -90,4 +91,5 @@ private:
     
     float resonanceCtl;
     float pressure;
+    float filterZip;
 };
