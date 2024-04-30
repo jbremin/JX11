@@ -16,18 +16,24 @@
 */
 class JX11AudioProcessorEditor  : public juce::AudioProcessorEditor
 {
-    public:
-        JX11AudioProcessorEditor (JX11AudioProcessor&);
-        ~JX11AudioProcessorEditor() override;
+public:
+    JX11AudioProcessorEditor (JX11AudioProcessor&);
+    ~JX11AudioProcessorEditor() override;
 
-        //==============================================================================
-        void paint (juce::Graphics&) override;
-        void resized() override;
+    //==============================================================================
+    void paint (juce::Graphics&) override;
+    void resized() override;
 
-    private:
-        // This reference is provided as a quick way for your editor to
-        // access the processor object that created it.
-        JX11AudioProcessor& audioProcessor;
+private:
+    // This reference is provided as a quick way for your editor to
+    // access the processor object that created it.
+    JX11AudioProcessor& audioProcessor;
+    
+    using APVTS = juce::AudioProcessorValueTreeState;
+    using SliderAttachment = APVTS::SliderAttachment;
 
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JX11AudioProcessorEditor)
+    juce::Slider outputLevelKnob;
+    SliderAttachment outputLevelAttachment { audioProcessor.apvts, ParameterID::outputLevel.getParamID(), outputLevelKnob };
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JX11AudioProcessorEditor)
 };
