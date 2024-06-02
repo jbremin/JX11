@@ -13,12 +13,10 @@
 JX11AudioProcessorEditor::JX11AudioProcessorEditor (JX11AudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    outputLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    outputLevelKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 100, 20);
+    outputLevelKnob.label = "Level";
     addAndMakeVisible(outputLevelKnob);
     
-    filterResoKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    filterResoKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 100, 20);
+    filterResoKnob.label = "Reso";
     addAndMakeVisible(filterResoKnob);
     
     polyModeButton.setButtonText("Poly");
