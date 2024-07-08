@@ -4,7 +4,7 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginFormats="buildStandalone,buildVST3"
               pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
               companyName="Benmir" pluginManufacturerCode="Bnmr" pluginManufacturer="Benmir"
-              displaySplashScreen="0">
+              displaySplashScreen="0" cppLanguageStandard="20">
   <MAINGROUP id="ZLAlaq" name="JX11">
     <GROUP id="{006F1FE8-138A-9FFD-6953-C90003061A5C}" name="Source">
       <FILE id="qz68PI" name="LookAndFeel.cpp" compile="1" resource="0" file="Source/LookAndFeel.cpp"/>
