@@ -19,6 +19,7 @@ static constexpr int textBoxHeight = 20;
 RotaryKnob::RotaryKnob()
 {
     slider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    slider.setRotaryParameters(juce::degreesToRadians(225.0f), juce::degreesToRadians(495.0f), true);
     slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 100, textBoxHeight);
     addAndMakeVisible(slider);
     setBounds(0, 0, 100, 120);

@@ -16,6 +16,12 @@ LookAndFeel::LookAndFeel()
     setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colour(0, 0, 0));
     setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(90, 180, 240));
     setColour(juce::Slider::thumbColourId, juce::Colour(255, 255, 255));
+    
+    setColour(juce::TextButton::buttonColourId, juce::Colour(15, 30, 45));
+    setColour(juce::TextButton::buttonOnColourId, juce::Colour(90, 180, 240));
+    setColour(juce::TextButton::textColourOffId, juce::Colour(180, 180, 180));
+    setColour(juce::TextButton::textColourOnId, juce::Colour(255, 255, 255));
+    setColour(juce::ComboBox::outlineColourId, juce::Colour(180, 180, 180));
 }
     
     void LookAndFeel::drawRotarySlider(
