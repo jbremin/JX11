@@ -16,7 +16,7 @@
 //==============================================================================
 /**
 */
-class JX11AudioProcessorEditor  : public juce::AudioProcessorEditor
+class JX11AudioProcessorEditor  : public juce::AudioProcessorEditor, private juce::Button::Listener
 {
 public:
     JX11AudioProcessorEditor (JX11AudioProcessor&);
@@ -30,6 +30,8 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     JX11AudioProcessor& audioProcessor;
+    
+    void buttonClicked(juce::Button* button) override;
     
     using APVTS = juce::AudioProcessorValueTreeState;
     using SliderAttachment = APVTS::SliderAttachment;
@@ -45,6 +47,8 @@ private:
     ButtonAttachment polyModeAttachment { audioProcessor.apvts, ParameterID::polyMode.getParamID(), polyModeButton };
     
     LookAndFeel globalLNF;
+    
+    juce::TextButton midiLearnButton;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (JX11AudioProcessorEditor)
 };

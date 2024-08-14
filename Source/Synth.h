@@ -32,10 +32,12 @@ public:
     float noiseMix;
     float detune;
     float tune;
+    
     float envAttack;
     float envDecay;
     float envSustain;
     float envRelease;
+    
     float oscMix;
     float volumeTrim;
     float vibrato;
@@ -58,6 +60,8 @@ public:
     int glideMode;
     float glideRate;
     float glideBend;
+    
+    uint8_t resoCC = 0x47;
         
 private:
     

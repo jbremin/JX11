@@ -92,6 +92,8 @@ class JX11AudioProcessor  : public juce::AudioProcessor,
         void setStateInformation (const void* data, int sizeInBytes) override;
     
         juce::AudioProcessorValueTreeState apvts { *this, nullptr, "Parameters", createParameterLayout() };
+    
+        std::atomic<bool> midiLearn;
 
 
     private:

@@ -306,6 +306,10 @@ void Synth::controlChange(uint8_t data1, uint8_t data2)
                 sustainPedalPressed = false;
             }
             break;
+    
+    }
+    if (data1 == resoCC) {
+        resonanceCtl = 154.0f / float(154 - data2);
     }
 }
 
