@@ -6,6 +6,9 @@
               companyName="Benmir" pluginManufacturerCode="Bnmr" pluginManufacturer="Benmir"
               displaySplashScreen="0" cppLanguageStandard="20">
   <MAINGROUP id="ZLAlaq" name="JX11">
+    <GROUP id="{25E471EB-8DCD-D004-BE23-E0E2D8BDD915}" name="Assets">
+      <FILE id="syYWhJ" name="Lato-Medium.ttf" compile="0" resource="1" file="Assets/Lato-Medium.ttf"/>
+    </GROUP>
     <GROUP id="{006F1FE8-138A-9FFD-6953-C90003061A5C}" name="Source">
       <FILE id="qz68PI" name="LookAndFeel.cpp" compile="1" resource="0" file="Source/LookAndFeel.cpp"/>
       <FILE id="DQ3UTN" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
